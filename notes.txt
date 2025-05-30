@@ -1,0 +1,57 @@
+Theoretical Explanation of the Code
+Library Imports:
+
+cv2: For accessing and processing video frames using OpenCV.
+
+mediapipe: For detecting hand landmarks using the MediaPipe hand tracking solution.
+
+pyautogui: For simulating mouse actions like movement and clicks.
+
+Initialization:
+
+The webcam is accessed using cv2.VideoCapture(0).
+
+The MediaPipe hand detector is initialized to track hand landmarks.
+
+Screen dimensions are retrieved using pyautogui.size() to map hand positions to screen coordinates.
+
+Main Loop (Real-Time Video Capture & Processing):
+
+A frame is captured from the webcam and horizontally flipped for mirror-like interaction.
+
+The frame is converted from BGR to RGB as required by MediaPipe.
+
+The hand detector processes the frame and returns detected hand landmarks.
+
+Hand Landmark Processing:
+
+If any hands are detected:
+
+Landmarks are drawn on the hand using MediaPipe’s drawing utilities.
+
+Each landmark is iterated through, and the (x, y) coordinates are scaled to the frame size.
+
+Gesture Recognition:
+
+Index Finger (Landmark ID 8):
+
+The position of the index finger tip is used to calculate screen coordinates (index_x, index_y) and a circle is drawn at the fingertip.
+
+Thumb (Landmark ID 4):
+
+The thumb tip position is also tracked and drawn similarly.
+
+The vertical distance between the index finger and thumb is calculated.
+
+If the distance is small (less than 20 pixels), it is interpreted as a click gesture, and a mouse click is triggered.
+
+If the distance is moderately small (less than 100 pixels), it is interpreted as a move gesture, and the mouse is moved to the calculated index finger position.
+
+Display and Loop Continuation:
+
+The processed video frame (with annotations) is displayed in a window titled "Virtual Mouse".
+
+The loop continues to run, capturing and processing frames in real-time.
+
+Conclusion
+This code creates a virtual mouse by tracking the user's hand through a webcam. It detects the position of the index finger to move the mouse cursor and recognizes a click gesture based on the relative position of the thumb to the index finger. The system combines computer vision, gesture recognition, and automation to create an intuitive, touchless interaction interface.
